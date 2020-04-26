@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import connect from '../store/connect';
 
 class Login extends Component {
   render() {
