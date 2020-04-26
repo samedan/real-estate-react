@@ -7,6 +7,14 @@ export const fetchRentals = () => {
   };
 };
 
+export const fetchRentalById = (rentalId) => {
+  const rental = rentalData.find((rental) => rental._id === rentalId);
+  return {
+    type: 'FETCH_RENTAL_BY_ID',
+    rental: rental,
+  };
+};
+
 export const createRental = (newRental) => {
   return {
     type: 'CREATE_RENTAL',

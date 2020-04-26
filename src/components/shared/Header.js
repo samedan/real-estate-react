@@ -72,7 +72,7 @@ const Header = () => {
             <Link
               className="nav-link"
               to="/login"
-              tabindex="-1"
+              tabIndex="-1"
               aria-disabled="true"
             >
               Login
@@ -82,7 +82,7 @@ const Header = () => {
             <Link
               className="nav-link"
               to="/register"
-              tabindex="-1"
+              tabIndex="-1"
               aria-disabled="true"
             >
               Register
