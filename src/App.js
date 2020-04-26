@@ -2,17 +2,17 @@ import React from 'react';
 import Header from './components/shared/Header';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
-import { StateContext } from './state-context';
+import Provider from './store/Provider';
 import { initStore } from './store';
 
 const store = initStore();
 export default function App() {
   return (
-    <StateContext.Provider value={store}>
+    <Provider store={store}>
       <Router>
         <Header />
         <Routes />
       </Router>
-    </StateContext.Provider>
+    </Provider>
   );
 }

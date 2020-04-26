@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 import RentalCard from '../components/rental/RentalCard';
-import store from '../store';
-import { StateContext } from '../state-context';
+import { fetchRentals, createRental } from '../actions';
+
 import connect from '../store/connect';
 
 class RentalHome extends Component {
-  state = {
-    rentals: [],
-  };
-
   componentDidMount() {
-    const { rentals } = this.props;
-
-    this.setState({
-      rentals: rentals,
-    });
+    this.props.dispatch(fetchRentals());
   }
 
   renderRentals = (rentals) =>
@@ -24,8 +16,25 @@ class RentalHome extends Component {
       </div>
     ));
 
+  createRental = () => {
+    const uid = Math.random().toString(32).slice(2);
+    const newRental = {
+      _id: uid,
+      title: 'Modern apartment in center',
+      city: 'New York',
+      category: 'apartment',
+      image: 'http://via.placeholder.com/350x250',
+      numOfRooms: 1,
+      shared: false,
+      description: 'Very nice apartment in center of the city.',
+      dailyPrice: 11,
+    };
+    // action 'createRental'
+    this.props.dispatch(createRental(newRental));
+  };
+
   render() {
-    const rentals = this.state.rentals;
+    const { rentals } = this.props;
 
     return (
       <div>
@@ -33,6 +42,9 @@ class RentalHome extends Component {
           <h1 className="page-title">Your Home All Around the World</h1>
           <div className="row">{this.renderRentals(rentals)}</div>
         </div>
+        <button className="btn btn-success" onClick={this.createRental}>
+          Create Rental
+        </button>
       </div>
     );
   }

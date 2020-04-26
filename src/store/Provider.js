@@ -1,5 +1,9 @@
-import Recat from 'react';
+import React from 'react';
 
-const Provider = ({ children, store }) => {
-  return;
-};
+export const StateContext = React.createContext({});
+
+const Provider = ({ children, store }) => (
+  <StateContext.Provider value={store}>{children}</StateContext.Provider>
+);
+
+export default Provider;
