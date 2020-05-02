@@ -12,7 +12,7 @@ const LoginForm = ({ onSubmit }) => {
         <label htmlFor="email">Email</label>
         <input
           ref={register({ required: true, pattern: EMAIL_PATTERN })}
-          novalidate
+          noValidate
           name="email"
           type="email"
           className="form-control"
@@ -26,14 +26,6 @@ const LoginForm = ({ onSubmit }) => {
             )}
           </div>
         )}
-        {/* <div className="alert alert-danger">
-  <div>
-    Email is required.
-  </div>
-  <div>
-    Must be valid email format!
-  </div>
-</div> */}
       </div>
       <div className="form-group">
         <label htmlFor="password">Password</label>
