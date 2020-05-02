@@ -9,6 +9,7 @@ export const fetchRentals = () => async (dispatch) => {
 };
 
 export const fetchRentalById = (rentalId) => async (dispatch) => {
+  dispatch({ type: 'IS_FETCHING_RENTAL' });
   const res = await axios.get(`/api/v1/rentals/${rentalId}`);
   dispatch({
     type: 'FETCH_RENTAL_BY_ID',
