@@ -7,13 +7,10 @@ import { withAuth } from '../providers/AuthProvider';
 import { connect } from 'react-redux';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shouldRedirect: false,
-      errors: [],
-    };
-  }
+  state = {
+    shouldRedirect: false,
+    errors: [],
+  };
 
   signIn = (loginData) => {
     this.props.auth
