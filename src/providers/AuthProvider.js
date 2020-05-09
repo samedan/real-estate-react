@@ -1,36 +1,76 @@
 import React from 'react';
-import { loginUser } from '../actions';
+import { connect } from 'react-redux';
+import { loginUser, userAuthenticated } from '../actions';
+import jwt from 'jsonwebtoken';
+import moment from 'moment';
 
-const { createContext } = React;
+const { createContext, useContext } = React;
 
 const AuthContext = createContext(null);
 
-export const AuthProvider = (props) => {
+const AuthBaseProvider = ({ children, dispatch }) => {
+  const checkAuthState = () => {
+    const decodedToken = decodeToken(getToken());
+    if (decodedToken && moment().isBefore(getExpiration(decodedToken))) {
+      dispatch(userAuthenticated(decodedToken));
+    }
+  };
+
+  const isAuthenticated = () => {
+    const decodedToken = decodeToken(getToken());
+    return decodeToken && isTokenValid(decodedToken);
+  };
+
+  const isTokenValid = (decodedToken) => {
+    return decodedToken && moment().isBefore(getExpiration(decodedToken));
+  };
+
+  const getExpiration = (decodedToken) => {
+    return moment.unix(decodedToken.exp);
+  };
+
+  const getToken = () => {
+    return localStorage.getItem('bwm_token');
+  };
+
+  const decodeToken = (token) => {
+    return jwt.decode(token);
+  };
+
   const signIn = (loginData) => {
     return loginUser(loginData).then((token) => {
-      console.log(token);
+      localStorage.setItem('bwm_token', token);
+      const decodedToken = decodeToken(token);
+      dispatch(userAuthenticated(decodedToken));
       return token;
     });
   };
 
-  // object
+  const signOut = () => {
+    localStorage.removeItem('bwm_token');
+    dispatch({ type: 'USER_SIGNED_OUT' });
+  };
+
   const authApi = {
     signIn,
+    signOut,
+    checkAuthState,
+    isAuthenticated,
   };
 
   return (
-    <AuthContext.Provider value={authApi}>
-      {props.children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authApi}>{children}</AuthContext.Provider>
   );
 };
 
-export const withAuth = (Component) => {
-  return function (props) {
-    return (
-      <AuthContext.Consumer>
-        {(authApi) => <Component {...props} auth={authApi} />}
-      </AuthContext.Consumer>
-    );
-  };
+export const AuthProvider = connect()(AuthBaseProvider);
+
+export const useAuth = () => {
+  return useContext(AuthContext);
 };
+
+export const withAuth = (Component) => (props) => (
+  <AuthContext.Consumer>
+    {(authApi) => <Component {...props} auth={authApi} />}
+  </AuthContext.Consumer>
+);

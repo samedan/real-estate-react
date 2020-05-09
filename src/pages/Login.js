@@ -18,8 +18,7 @@ class Login extends Component {
   signIn = (loginData) => {
     this.props.auth
       .signIn(loginData)
-      .then((token) => {
-        console.log(token);
+      .then((_) => {
         this.setState({ shouldRedirect: true });
       })
       .catch((errors) => this.setState({ errors }));
@@ -27,6 +26,7 @@ class Login extends Component {
 
   render() {
     const { errors, shouldRedirect } = this.state;
+    const { message } = this.props.location.state || '';
 
     if (shouldRedirect) {
       return <Redirect to={{ pathname: '/' }} />;
@@ -36,6 +36,7 @@ class Login extends Component {
         <div className="row">
           <div className="col-md-5">
             <h1 className="page-title">Login</h1>
+            {message && <div className="alert alert-success">{message}</div>}
             <LoginForm onSubmit={this.signIn} />
             {errors && errors.length > 0 ? <ApiErrors errors={errors} /> : null}
           </div>
