@@ -1,17 +1,43 @@
 import React, { Component } from 'react';
 import LoginForm from '../components/forms/LoginForm';
+// import { loginUser } from '../actions';
+import { Redirect } from 'react-router-dom';
+import ApiErrors from '../components/forms/ApiErrors';
+import { withAuth } from '../providers/AuthProvider';
+import { connect } from 'react-redux';
 
 class Login extends Component {
-  loginUser = (loginData) => {
-    console.log(loginData);
+  constructor(props) {
+    super(props);
+    this.state = {
+      shouldRedirect: false,
+      errors: [],
+    };
+  }
+
+  signIn = (loginData) => {
+    this.props.auth
+      .signIn(loginData)
+      .then((token) => {
+        console.log(token);
+        this.setState({ shouldRedirect: true });
+      })
+      .catch((errors) => this.setState({ errors }));
   };
+
   render() {
+    const { errors, shouldRedirect } = this.state;
+
+    if (shouldRedirect) {
+      return <Redirect to={{ pathname: '/' }} />;
+    }
     return (
       <div className="bwm-form">
         <div className="row">
           <div className="col-md-5">
             <h1 className="page-title">Login</h1>
-            <LoginForm onSubmit={this.loginUser} />
+            <LoginForm onSubmit={this.signIn} />
+            {errors && errors.length > 0 ? <ApiErrors errors={errors} /> : null}
           </div>
           <div className="col-md-6 ml-auto">
             <div className="image-container">
@@ -27,4 +53,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect()(withAuth(Login));

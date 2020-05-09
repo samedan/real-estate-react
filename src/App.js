@@ -4,15 +4,18 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
 import { Provider } from 'react-redux';
 import { initStore } from './store';
+import { AuthProvider } from './providers/AuthProvider';
 
 const store = initStore();
 export default function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <Header />
-        <Routes />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Header />
+          <Routes />
+        </Router>
+      </AuthProvider>
     </Provider>
   );
 }
