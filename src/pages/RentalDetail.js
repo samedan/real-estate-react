@@ -6,11 +6,25 @@ import { fetchRentalById } from '../actions';
 import { capitalize } from '../helpers/functions';
 import RentalAssets from '../components/rental/RentalAssets';
 import RentalInfo from '../components/rental/RentalInfo';
+import TomMap from '../components/map/TomMap';
 
 class RentalDetail extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.dispatch(fetchRentalById(id));
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch({ type: 'UNMOUNT_RENTAL' });
+  }
+
+  get location() {
+    const {
+      rental: { street, city },
+      UNMOUNT_RENTAL,
+    } = this.props;
+    // 'new york, main street'
+    return street && city && city + ', ' + street;
   }
 
   render() {
@@ -28,8 +42,7 @@ class RentalDetail extends Component {
               <img src={rental.image} alt={rental.title} />
             </div>
             <div className="col-md-6">
-              {/* <!-- TODO: Display rental map --> */}
-              <img src="#" alt="" />
+              <TomMap location={this.location} />
             </div>
           </div>
         </div>

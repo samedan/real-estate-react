@@ -5,12 +5,17 @@ import Routes from './Routes';
 import { Provider } from 'react-redux';
 import { initStore } from './store';
 import { AuthProvider, useAuth } from './providers/AuthProvider';
+import { MapProvider } from './providers/MapProvider';
 
 const store = initStore();
 
 const Providers = ({ children }) => (
   <Provider store={store}>
-    <AuthProvider>{children}</AuthProvider>
+    <AuthProvider>
+      <MapProvider apiKey="mt6Bm54nngplDPhfdnw2HrsbnqR6K7op">
+        {children}
+      </MapProvider>
+    </AuthProvider>
   </Provider>
 );
 const BwmApp = () => {
