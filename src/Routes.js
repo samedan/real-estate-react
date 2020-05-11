@@ -7,6 +7,7 @@ import RentalDetail from './pages/RentalDetail';
 import SecretPage from './pages/SecretPage';
 import AuthRoute from './components/auth/AuthRoute';
 import GuestRoute from './components/auth/GuestRoute';
+import RentalNew from './pages/RentalNew';
 
 export default function Routes() {
   return (
@@ -15,12 +16,15 @@ export default function Routes() {
         <Route exact path="/">
           <RentalHome />
         </Route>
-
+        <AuthRoute path="/rentals/new">
+          <RentalNew />
+        </AuthRoute>
         <Route path="/rentals/:id">
           <RentalDetail />
         </Route>
 
         {/* <AuthRoute path="/secret" component={SecretPage} /> */}
+
         <AuthRoute path="/secret">
           <SecretPage />
         </AuthRoute>
