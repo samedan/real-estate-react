@@ -7,6 +7,7 @@ import { capitalize } from '../helpers/functions';
 import RentalAssets from '../components/rental/RentalAssets';
 import RentalInfo from '../components/rental/RentalInfo';
 import TomMap from '../components/map/TomMap';
+import BookingReserve from '../components/booking/BookingReserve';
 
 class RentalDetail extends Component {
   componentDidMount() {
@@ -30,7 +31,7 @@ class RentalDetail extends Component {
   render() {
     const { rental, isFetching } = this.props;
 
-    if (isFetching) {
+    if (isFetching || !rental._id) {
       return <h1>Loading...</h1>;
     }
     return (
@@ -52,7 +53,9 @@ class RentalDetail extends Component {
             <div className="col-md-8">
               <RentalInfo rental={rental} />
             </div>
-            <div className="col-md-4"> BOOKING</div>
+            <div className="col-md-4">
+              <BookingReserve rental={rental} />
+            </div>
           </div>
         </div>
       </section>
