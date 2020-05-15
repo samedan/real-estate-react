@@ -7,6 +7,8 @@ import { initStore } from './store';
 import { AuthProvider, useAuth } from './providers/AuthProvider';
 import { MapProvider } from './providers/MapProvider';
 
+import { ToastContainer, toast } from 'react-toastify';
+
 const store = initStore();
 
 const Providers = ({ children }) => (
@@ -36,6 +38,7 @@ const BwmApp = () => {
 export default function App() {
   return (
     <Providers>
+      <ToastContainer />
       <BwmApp />
     </Providers>
   );

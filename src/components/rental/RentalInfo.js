@@ -8,6 +8,15 @@ const RentalInfo = ({ rental }) => (
     <h2 className={`rental-type type-${rental.category}`}>
       {rental.shared ? 'Shared' : 'Whole'} {rental.category}
     </h2>
+    {rental && rental.owner && (
+      <div className="rental-owner">
+        <img
+          src="https://api.adorable.io/avatars/285/abott@adorable.png"
+          alt="owner"
+        />
+        <span>{rental.owner.username}</span>
+      </div>
+    )}
 
     <h1 className="rental-title">{rental.title}</h1>
 
