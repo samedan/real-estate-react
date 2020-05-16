@@ -7,15 +7,18 @@ export const capitalize = (value) => {
     value
       // ['san', 'francisco']
       .split(' ')
-      .map(
-        (word) =>
-          // s => san[0]
-          word[0]
+      .map((word) => {
+        const lowerCaseWord = word.toLowerCase();
+        console.log(lowerCaseWord);
+        // s => san[0]
+        return (
+          lowerCaseWord[0]
             // s => S
             .toUpperCase() +
           // san => an, S+an
-          word.slice(1)
-      )
+          lowerCaseWord.slice(1)
+        );
+      })
       .join(' ')
   );
 };

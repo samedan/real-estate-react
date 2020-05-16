@@ -30,9 +30,9 @@ class RentalHome extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ rentals }) => {
   return {
-    rentals: state.rentals,
+    rentals: rentals.items,
   };
 };
 
