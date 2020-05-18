@@ -20,6 +20,7 @@ const initRentalsReducer = () => {
 
   return combineReducers({
     items,
+    isFetching,
   });
 };
 

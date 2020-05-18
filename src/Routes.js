@@ -9,6 +9,9 @@ import AuthRoute from './components/auth/AuthRoute';
 import GuestRoute from './components/auth/GuestRoute';
 import RentalNew from './pages/RentalNew';
 import RentalHomeSearch from './pages/RentalHomeSearch';
+import ManageBookings from './pages/ManageBookings';
+import ReceivedBookings from './pages/ReceivedBookings';
+import ManageRentals from './pages/ManageRentals';
 
 export default function Routes() {
   return (
@@ -17,6 +20,16 @@ export default function Routes() {
         <Route exact path="/">
           <RentalHome />
         </Route>
+        <AuthRoute path="/bookings/manage">
+          <ManageBookings />
+        </AuthRoute>
+        <AuthRoute path="/bookings/received">
+          <ReceivedBookings />
+        </AuthRoute>
+        <AuthRoute path="/rentals/manage">
+          <ManageRentals />
+        </AuthRoute>
+
         <Route path="/rentals/:location/homes">
           <RentalHomeSearch />
         </Route>

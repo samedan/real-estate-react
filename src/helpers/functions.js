@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const capitalize = (value) => {
   if (!value || typeof value !== 'string') {
     return '';
@@ -9,7 +11,7 @@ export const capitalize = (value) => {
       .split(' ')
       .map((word) => {
         const lowerCaseWord = word.toLowerCase();
-        console.log(lowerCaseWord);
+        // console.log(lowerCaseWord);
         // s => san[0]
         return (
           lowerCaseWord[0]
@@ -21,4 +23,11 @@ export const capitalize = (value) => {
       })
       .join(' ')
   );
+};
+
+export const formatDate = (date, dateFormat = 'YYYY/MM/DD') => {
+  if (!date || typeof date !== 'string') {
+    return '';
+  }
+  return moment(date).format(dateFormat);
 };

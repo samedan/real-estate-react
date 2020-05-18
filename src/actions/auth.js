@@ -9,7 +9,7 @@ const { bwmAxios } = axiosService;
 export const registerUser = (registerData) => {
   return bwmAxios
     .post('/users/register', registerData)
-    .catch((error) => Promise.reject(extractApiErrors(error.response || {})));
+    .catch((error) => Promise.reject(extractApiErrors(error.response || [])));
 };
 
 // Login
@@ -17,7 +17,7 @@ export const loginUser = (loginData) => {
   return bwmAxios
     .post('/users/login', loginData)
     .then((res) => res.data)
-    .catch((error) => Promise.reject(extractApiErrors(error.response || {})));
+    .catch((error) => Promise.reject(extractApiErrors(error.response || [])));
 };
 
 // AUThState
