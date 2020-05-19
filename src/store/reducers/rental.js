@@ -7,6 +7,7 @@ const initRentalReducer = () => {
       case 'UNMOUNT_RENTAL':
         return {};
       case 'FETCH_RENTAL_BY_ID':
+      case 'UPDATE_RENTAL_SUCCESS':
         return action.rental;
       default:
         return state;

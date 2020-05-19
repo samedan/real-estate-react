@@ -10,6 +10,22 @@ export const MapProvider = ({ children, apiKey }) => {
   // CACHE
   const cache = useRef({});
 
+  const removeMarkers = () => {
+    removeElementsByClass('bwm-marker');
+  };
+
+  const removePopups = () => {
+    removeElementsByClass('bwm-popup');
+  };
+
+  const removeElementsByClass = (className) => {
+    const elements = document.getElementsByClassName(className);
+    while (elements.length > 0) {
+      const element = elements[0];
+      element.parentNode.removeChild(element);
+    }
+  };
+
   const cacheLocation = (location, position) => {
     // normalize location
     // 'new york, times square 2' => 'newyork,timesquare2'
@@ -20,8 +36,8 @@ export const MapProvider = ({ children, apiKey }) => {
 
   const getCacheLocation = (location) => {
     const locationKey = normalizeLocation(location);
-    console.log('Reading Cahce from : ' + cache.current[locationKey]);
-    console.log(cache.current[locationKey]);
+    // console.log('Reading Cahce from : ' + cache.current[locationKey]);
+    // console.log(cache.current[locationKey]);
     return cache.current[locationKey];
   };
 
@@ -48,6 +64,7 @@ export const MapProvider = ({ children, apiKey }) => {
   };
 
   const addMarker = (map, position) => {
+    removeMarkers();
     // MARKER on Map
     const markerDiv = document.createElement('div');
     markerDiv.className = 'bwm-marker';
@@ -61,6 +78,7 @@ export const MapProvider = ({ children, apiKey }) => {
 
   //POPUP
   const addPopupMessage = (map, message) => {
+    removePopups();
     new tt.Popup({
       className: 'bwm-popup',
       closeButton: false,

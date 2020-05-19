@@ -1,6 +1,11 @@
 import axiosService from '../services/AxiosService';
 import { deleteResource } from '.';
+import { extractApiErrors } from '.';
 const { bwmAxios } = axiosService;
+
+export const verifyRentalOwner = (rentalId) => {
+  return bwmAxios.get(`/rentals/${rentalId}/verify-user`);
+};
 
 export const fetchRentals = (location) => (dispatch) => {
   const query = location ? `/rentals?city=${location}` : '/rentals';
@@ -42,6 +47,23 @@ export const fetchRentalById = (rentalId) => async (dispatch) => {
 // POST
 export const createRental = (rental) => {
   return bwmAxios.post('/rentals', rental);
+};
+
+// PATCH
+export const updateRental = (id, rentalData) => (dispatch) => {
+  return (
+    bwmAxios
+      .patch(`/rentals/${id}`, rentalData)
+      .then((res) => res.data)
+      // 'updatedRental' is the 'res' from server
+      .then((updatedRental) =>
+        dispatch({
+          type: 'UPDATE_RENTAL_SUCCESS',
+          rental: updatedRental,
+        })
+      )
+      .catch((error) => Promise.reject(extractApiErrors(error.response || [])))
+  );
 };
 
 // DELETE

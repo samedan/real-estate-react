@@ -12,6 +12,7 @@ import RentalHomeSearch from './pages/RentalHomeSearch';
 import ManageBookings from './pages/ManageBookings';
 import ReceivedBookings from './pages/ReceivedBookings';
 import ManageRentals from './pages/ManageRentals';
+import RentalEdit from './pages/RentalEdit';
 
 export default function Routes() {
   return (
@@ -35,6 +36,9 @@ export default function Routes() {
         </Route>
         <AuthRoute path="/rentals/new">
           <RentalNew />
+        </AuthRoute>
+        <AuthRoute path="/rentals/:id/edit">
+          <RentalEdit />
         </AuthRoute>
         <Route path="/rentals/:id">
           <RentalDetail />
