@@ -8,7 +8,7 @@ export default function RentalCard({ rental, renderMenu }) {
         <div className="card bwm-card">
           <img
             className="card-img-top"
-            src={rental.image}
+            src={rental.image.url}
             alt="Card image cap"
           />
           <div className="card-body">

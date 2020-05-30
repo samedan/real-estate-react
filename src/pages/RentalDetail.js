@@ -40,7 +40,11 @@ class RentalDetail extends Component {
           <div className="row">
             <div className="col-md-6">
               {/* <!-- TODO: Display rental image --> */}
-              <img src={rental.image} alt={rental.title} />
+              <img
+                className="rental-img"
+                src={rental.image.url}
+                alt={rental.title}
+              />
             </div>
             <div className="col-md-6">
               <TomMap location={this.location} />

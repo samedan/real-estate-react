@@ -1,6 +1,12 @@
 import axiosService from '../services/AxiosService';
 const { bwmAxios } = axiosService;
 
+export const uploadImage = (imageFile) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+  return bwmAxios.post('/image-upload', formData).then((res) => res.data);
+};
+
 export const extractApiErrors = (resError) => {
   let errors = [{ title: 'Error', detail: 'Generic error' }];
   if (resError && resError.data && resError.data.errors) {

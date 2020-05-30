@@ -40,9 +40,29 @@ class EditableComponent extends Component {
     }
   };
 
+  renderView = () => {
+    const { value } = this.state;
+    const {
+      className,
+      transformView,
+      viewComponent: ViewComponent,
+    } = this.props;
+    const viewValue = transformView ? transformView(value) : `${value}`;
+
+    if (ViewComponent) {
+      return (
+        <ViewComponent
+          value={viewValue}
+          className={`editable-item ${className}`}
+        />
+      );
+    }
+    return <span className={`editable-item ${className}`}>{viewValue}</span>;
+  };
+
   renderComponentView = () => {
     const { value, isActiveInput } = this.state;
-    const { className, transformView, renderComponent } = this.props;
+    const { renderComponent } = this.props;
     if (isActiveInput) {
       return (
         <>
@@ -67,9 +87,7 @@ class EditableComponent extends Component {
     }
     return (
       <>
-        <span className={`editable-item ${className}`}>
-          {transformView ? transformView(value) : `${value}`}
-        </span>
+        {this.renderView()}
         <div className="button-container">
           <button
             className="btn btn-warning btn-editable"
@@ -83,13 +101,15 @@ class EditableComponent extends Component {
   };
 
   render() {
-    const { inline } = this.props;
+    const { containerType } = this.props;
+    let containerClass = '';
+    if (containerType === 'inline') {
+      containerClass = 'editable-component-inline';
+    } else if (containerType === 'block') {
+      containerClass = 'editable-component-block';
+    }
     return (
-      <div
-        className={`editable-component ${
-          inline ? 'editable-component-inline' : ''
-        }`}
-      >
+      <div className={`editable-component ${containerClass}`}>
         {this.renderComponentView()}
       </div>
     );

@@ -12,6 +12,7 @@ import {
   EditableInput,
   EditableTextarea,
   EditableSelect,
+  EditableImage,
 } from '../components/editable';
 
 // HOC
@@ -82,18 +83,26 @@ class RentalEdit extends React.Component {
   }
 
   render() {
-    const { rental, isFetching, isAuth } = this.props;
+    const { rental, isFetching } = this.props;
 
     if (isFetching || !rental._id) {
       return <h1>Loading...</h1>;
     }
     return (
-      <section id="rentalDetails">
+      <section id="rentalEdit">
         <div className="upper-section">
           <div className="row">
             <div className="col-md-6">
               {/* <!-- TODO: Display rental image --> */}
-              <img src={rental.image} alt={rental.title} />
+              {/* <img src={rental.image.url} alt={rental.title} /> */}
+              <EditableImage
+                entity={rental}
+                field={'image'}
+                containerType={'block'}
+                className="rental-img mb-2"
+                transformView={(image) => image.url}
+                onUpdate={this.updateRental}
+              />
             </div>
             <div className="col-md-6">
               <TomMap location={this.location} />
@@ -110,7 +119,7 @@ class RentalEdit extends React.Component {
                   entity={rental}
                   onUpdate={this.updateRental}
                   field={'shared'}
-                  inline={true}
+                  containerType={'inline'}
                   options={[true, false]}
                   className={`rental-type type-${rental.category}`}
                 />
@@ -151,7 +160,7 @@ class RentalEdit extends React.Component {
                     <EditableInput
                       entity={rental}
                       onUpdate={this.updateRental}
-                      inline={true}
+                      containerType={'inline'}
                       field={'numOfRooms'}
                       className={'mr-0 ml-2'}
                     />
