@@ -4,6 +4,7 @@ import { fetchRentals } from '../actions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { capitalize } from '../helpers/functions';
+import Spinner from '../components/shared/Spinner';
 
 class RentalHomeSearch extends Component {
   componentDidMount() {
@@ -41,11 +42,16 @@ class RentalHomeSearch extends Component {
   render() {
     const { rentals, isFetching } = this.props;
 
+    if (isFetching) {
+      return <Spinner />;
+    }
     return (
       <div className="card-list">
         <h1 className="page-title">
-          Your Home in: "{capitalize(this.location)}"
+          {/* Your Home in: "{capitalize(this.location)}" */}
+          Your Home in: "{this.location}"
         </h1>
+
         <div className="row">{this.renderRentals(rentals)}</div>
         {this.noRentalsFound && (
           <p className="alert alert-warning">No Rentals found</p>

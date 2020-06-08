@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RentalCard from '../components/rental/RentalCard';
+import Spinner from '../components/shared/Spinner';
 import { fetchRentals } from '../actions';
 
 import { connect } from 'react-redux';
@@ -18,15 +19,17 @@ class RentalHome extends Component {
 
   render() {
     const { rentals } = this.props;
-
-    return (
-      <div>
-        <div className="card-list">
-          <h1 className="page-title">Your Home All Around the World</h1>
-          <div className="row">{this.renderRentals(rentals)}</div>
+    if (rentals && rentals.length > 0) {
+      return (
+        <div>
+          <div className="card-list">
+            <h1 className="page-title">Your Home All Around the World</h1>
+            <div className="row">{this.renderRentals(rentals)}</div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+    return <Spinner />;
   }
 }
 

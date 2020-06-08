@@ -7,17 +7,42 @@ export const verifyRentalOwner = (rentalId) => {
   return bwmAxios.get(`/rentals/${rentalId}/verify-user`);
 };
 
-export const fetchRentals = (location) => (dispatch) => {
-  const query = location ? `/rentals?city=${location}` : '/rentals';
-  dispatch({ type: 'REQUEST_DATA', resource: 'rentals' });
-  bwmAxios.get(query).then((res) => {
+// export const fetchRentals = (location) => (dispatch) => {
+//   const query = location ? `/rentals?city=${location}` : '/rentals';
+//   dispatch({ type: 'REQUEST_DATA', resource: 'rentals' });
+//   bwmAxios.get(query).then((res) => {
+//     const rentals = res.data;
+//     dispatch({ type: 'REQUEST_DATA_COMPLETE', resource: 'rentals' });
+//     dispatch({
+//       type: 'FETCH_RENTALS',
+//       rentals,
+//     });
+//   });
+// };
+// ASYNC
+export const fetchRentals = (string) => async (dispatch) => {
+  // string = string.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+  // console.log('string=' + string);
+
+  const query = string ? `/rentals?city=${string}` : '/rentals';
+
+  try {
+    dispatch({ type: 'REQUEST_DATA', resource: 'rentals' });
+    const res = await bwmAxios.get(query);
+
+    if (res.data === []) {
+      console.log('empty');
+    }
     const rentals = res.data;
     dispatch({ type: 'REQUEST_DATA_COMPLETE', resource: 'rentals' });
     dispatch({
       type: 'FETCH_RENTALS',
       rentals,
     });
-  });
+  } catch (err) {
+    dispatch({ type: 'REQUEST_DATA_COMPLETE', resource: 'rentals' });
+    console.log(err);
+  }
 };
 
 export const fetchUserRentals = () => (dispatch) => {
@@ -45,8 +70,10 @@ export const fetchRentalById = (rentalId) => async (dispatch) => {
 };
 
 // POST
-export const createRental = (rental) => {
-  return bwmAxios.post('/rentals', rental);
+export const createRental = async (rental) => {
+  return bwmAxios
+    .post('/rentals', rental)
+    .catch((error) => Promise.reject(extractApiErrors(error.response || [])));
 };
 
 // PATCH

@@ -9,8 +9,8 @@ class AxiosService {
 
   initInstance() {
     this.axiosInstance = axios.create({
-      baseURL: '/api/v1',
-      timeout: 5000,
+      baseURL: 'https://bwm-react-immo.herokuapp.com/api/v1',
+      timeout: 12000,
     });
 
     // Runs before every request

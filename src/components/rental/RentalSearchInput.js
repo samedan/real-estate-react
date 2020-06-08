@@ -6,7 +6,11 @@ const RentalSearchInput = () => {
   const history = useHistory();
 
   const handleSearch = () => {
-    location ? history.push(`/rentals/${location}/homes`) : history.push('/');
+    const newLocation = location.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+    console.log('location=' + newLocation + 'end');
+    location
+      ? history.push(`/rentals/${newLocation}/homes`)
+      : history.push('/');
   };
 
   const handleKeyPress = (event) => {

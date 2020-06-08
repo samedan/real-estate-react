@@ -31,6 +31,7 @@ export const errorsReducer = (resource) => {
       case 'REQUEST_DATA':
         return [];
       case 'REQUEST_ERROR':
+      case 'POST_ERROR':
         return action.errors;
       default:
         return state;
@@ -48,6 +49,8 @@ export const isFetchingReducer = (resource) => {
         return true;
       case 'REQUEST_DATA_COMPLETE':
         return false;
+      // case 'POST_ERROR':
+      //   return false;
       default:
         return state;
     }

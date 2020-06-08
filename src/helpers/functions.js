@@ -10,16 +10,24 @@ export const capitalize = (value) => {
       // ['san', 'francisco']
       .split(' ')
       .map((word) => {
-        const lowerCaseWord = word.toLowerCase();
-        // console.log(lowerCaseWord);
+        console.log('word:' + word + ':end');
+        if (word !== '') {
+          const lowerCaseWord = word.toLowerCase();
+          // console.log(lowerCaseWord);
+          return lowerCaseWord[0].toUpperCase() + lowerCaseWord.slice(1);
+          // const firstLetter = lowerCaseWord[0];
+          // console.log(firstLetter.toUpperCase());
+          // console.log(lowerCaseWord.slice(1));
+        }
+
         // s => san[0]
-        return (
-          lowerCaseWord[0]
-            // s => S
-            .toUpperCase() +
-          // san => an, S+an
-          lowerCaseWord.slice(1)
-        );
+        // return (
+        //   lowerCaseWord[0]
+        //     // s => S
+        //     .toUpperCase() +
+        //   // san => an, S+an
+        //   lowerCaseWord.slice(1)
+        // );
       })
       .join(' ')
   );

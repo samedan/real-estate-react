@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import RentalForm from '../components/forms/RentalForm';
 import { Redirect } from 'react-router-dom';
+
 import { createRental } from '../actions';
 
 class RentalNew extends Component {
   state = {
     shouldRedirect: false,
+    errors: [],
   };
 
   handleRentalCreate = (rentalData) => {
@@ -15,12 +17,16 @@ class RentalNew extends Component {
           shouldRedirect: true,
         })
       )
-      .catch((_) => console.log('Errors'));
+      // .catch((_) => console.log('Errors'));
+      .catch((errors) => {
+        // console.log(errors);
+        this.setState({ errors });
+      });
   };
 
   render() {
-    const { shouldRedirect } = this.state;
-
+    const { errors, shouldRedirect } = this.state;
+    // console.log(errors);
     if (shouldRedirect) {
       return <Redirect to={{ pathname: '/' }} />;
     }
@@ -31,7 +37,8 @@ class RentalNew extends Component {
           <div className="row">
             <div className="col-md-5">
               <h1 className="page-title">Create Rental</h1>
-              <RentalForm onSubmit={this.handleRentalCreate} />
+
+              <RentalForm onSubmit={this.handleRentalCreate} errors={errors} />
               {/* <div>
             <p>
               Some Errors
